@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Una noche en Suavesón - Albeiro Flórez Villa</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #fcfcfc; 
+            --text-color: #0a0a0a; 
+            --accent-color: #d91c1c; 
+            --nav-bg: rgba(252, 252, 252, 0.8);
+            --border-color: #e0e0e0;
+        }
+
+        body.dark-mode {
+            --bg-color: #0a0a0a; 
+            --text-color: #fcfcfc; 
+            --nav-bg: rgba(10, 10, 10, 0.8);
+            --border-color: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* --- Navegación --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 5%;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            transition: background-color 0.5s ease;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            line-height: 1.3;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .logo span { color: var(--accent-color); }
+
+        .menu-container { display: flex; align-items: center; gap: 3rem; }
+        .menu-links { display: flex; gap: 3rem; list-style: none; }
+        .menu-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .menu-links a:hover { color: var(--accent-color); }
+
+        /* Botón Tema */
+        .theme-toggle {
+            background: none; border: 1px solid var(--text-color); padding: 0.5rem; 
+            border-radius: 5px; cursor: pointer; transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center; width: 38px; height: 38px;
+        }
+        .theme-toggle:hover { background-color: var(--text-color); }
+        .theme-toggle svg { width: 20px; height: 20px; stroke: var(--text-color); transition: stroke 0.3s ease; }
+        .theme-toggle:hover svg { stroke: var(--bg-color); }
+        body:not(.dark-mode) .icon-moon { display: none; }
+        body:not(.dark-mode) .icon-sun { display: block; }
+        body.dark-mode .icon-sun { display: none; }
+        body.dark-mode .icon-moon { display: block; }
+
+        /* --- Contenedor Principal --- */
+        .detalle-container {
+            padding: 150px 5% 100px 5%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* --- Sección Superior (Libro / Descarga) --- */
+        .seccion-libro {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            margin-bottom: 6rem;
+        }
+
+        .info-descarga {
+            flex: 1;
+            /* GSAP inicial */
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .titulo-obra {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .titulo-obra i { font-style: italic; color: #777; }
+
+        .btn-descarga {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 1.2rem 2.5rem;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn-descarga:hover {
+            transform: translateY(-5px);
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+
+        .btn-descarga svg {
+            width: 20px; height: 20px;
+        }
+
+        .imagen-libro {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            /* GSAP inicial */
+            opacity: 0;
+            transform: translateX(30px);
+        }
+
+        /* Estilo para que la imagen se vea elegante (tipo retrato o 9:16) */
+        .imagen-libro img {
+            max-width: 100%;
+            height: auto;
+            max-height: 600px;
+            object-fit: cover;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        /* --- Línea divisoria --- */
+        .divisor {
+            width: 100%;
+            height: 1px;
+            background-color: var(--border-color);
+            border: none;
+            margin: 4rem 0;
+            opacity: 0; /* GSAP inicial */
+        }
+
+        /* --- Sección Inferior (Foto / Biografía) --- */
+        .seccion-autor {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 5rem;
+        }
+
+        .foto-autor {
+            flex: 1;
+            /* GSAP inicial */
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .foto-autor img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 3/4; /* Formato retrato clásico */
+            object-fit: cover;
+            filter: grayscale(100%); /* Le da un toque muy literario, quítalo si prefieres color */
+            transition: filter 0.5s ease;
+        }
+
+        .foto-autor img:hover {
+            filter: grayscale(0%);
+        }
+
+        .bio-autor {
+            flex: 1.2;
+            /* GSAP inicial */
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .nombre-autor {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+        }
+
+        .texto-bio {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            font-weight: 300;
+            opacity: 0.85;
+            text-align: justify;
+        }
+
+        /* --- Responsive para celulares --- */
+        @media (max-width: 768px) {
+            nav { flex-direction: column; gap: 1.5rem; padding: 1.5rem 5%; }
+            .menu-container { flex-direction: column; gap: 1.5rem; }
+            .detalle-container { padding-top: 200px; }
+            
+            .seccion-libro { flex-direction: column-reverse; text-align: center; gap: 2rem; }
+            .imagen-libro { justify-content: center; }
+            .titulo-obra { font-size: 2.5rem; }
+            
+            .seccion-autor { flex-direction: column; gap: 3rem; }
+            .nombre-autor { text-align: center; }
+        }
+
+footer {
+    border-top: 1px solid var(--border-color);
+    padding: 4rem 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+    transition: border-color 0.5s ease;
+}
+
+.footer-logo {
+    max-width: 120px;
+    height: auto;
+    transition: filter 0.5s ease;
+}
+
+body.dark-mode .footer-logo {
+    filter: invert(1);
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+}
+
+.social-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--accent-color);
+}
+
+.copyright {
+    font-size: 0.75rem;
+    opacity: 0.6;
+}
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">Taller de Escritores<br>Urabá Escribe<span>.</span></a>
+        <div class="menu-container">
+            <ul class="menu-links">
+                <li><a href="index.html">El Taller</a></li>
+                <li><a href="textos.html">Textos</a></li>
+                <li><a href="donar.html">Donar</a></li>
+            </ul>
+            <button class="theme-toggle" id="btnTheme" title="Cambiar modo">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="18.36" x2="5.64" y2="16.93"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+        </div>
+    </nav>
+
+    <main class="detalle-container">
+        
+        <!-- ARRIBA: Título a la izquierda, Libro a la derecha -->
+        <section class="seccion-libro">
+            <div class="info-descarga">
+                <h1 class="titulo-obra">Una noche en <br><i>Suavesón</i></h1>
+                
+                <!-- El botón de descarga tiene un icono sutil integrado -->
+                <a href="suaveson.pdf" target="_blank" class="btn-descarga">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Descargar Texto
+                </a>
+            </div>
+            <div class="imagen-libro">
+                <!-- Reemplaza "libro.jpg" con el archivo de tu imagen -->
+                <img src="libro.jpg" alt="Portada Una Noche en Suavesón">
+            </div>
+        </section>
+
+        <hr class="divisor">
+
+        <!-- ABAJO: Foto a la izquierda, Biografía a la derecha -->
+        <section class="seccion-autor">
+            <div class="foto-autor">
+                <!-- Reemplaza "autor.jpg" con la foto de Albeiro -->
+                <img src="autor.jpg" alt="Fotografía de Albeiro Flórez Villa">
+            </div>
+            <div class="bio-autor">
+                <h2 class="nombre-autor">Albeiro Flórez Villa</h2>
+                <p class="texto-bio">
+                    Albeiro Flórez es filósofo de la Universidad de Antioquia y especialista en pedagogía. Confundador del Taller de Escritores Urabá Escribe. Tiene varias obras publicadas entre cuento, novela y poesía. Es premio Regional de Poesía “El Gran Urabá”, Premio Departamental de Poesía Seduca, Premio Nacional de Poesía “Fuego en la Palabras” y Premio Nacional de Poesía “Ciro Mendía”.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Animaciones de entrada elegantes con GSAP
+        window.onload = () => {
+            const tl = gsap.timeline();
+
+            tl.from("nav", { opacity: 0, y: -20, duration: 1, ease: "power2.out" })
+              .to(".info-descarga", { opacity: 1, x: 0, duration: 1, ease: "power3.out" }, "-=0.5")
+              .to(".imagen-libro", { opacity: 1, x: 0, duration: 1, ease: "power3.out" }, "-=0.8")
+              .to(".divisor", { opacity: 1, duration: 1 }, "-=0.5")
+              .to(".foto-autor", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.5")
+              .to(".bio-autor", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.8");
+        };
+
+        // Lógica del Modo Oscuro
+        const btnTheme = document.getElementById('btnTheme');
+        btnTheme.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+    </script>
+
+<footer>
+    <img src="logo.png" alt="Sello Urabá Escribe 1985" class="footer-logo">
+    
+    <ul class="social-links">
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">Contacto</a></li>
+    </ul>
+    
+    <p class="copyright">© 2026 Taller de Escritores Urabá Escribe. Todos los derechos reservados.</p>
+</footer>
+
+</body>
+</html>
