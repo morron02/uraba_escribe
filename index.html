@@ -6,7 +6,7 @@
     <title>Taller de Escritores Urabá Escribe</title>
     <link rel="icon" type="image/png" href="favicon.png">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <style>
@@ -34,7 +34,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: 'Inter', sans-serif;
+            font-family: 'DM SANS', sans-serif;
             overflow-x: hidden;
             transition: background-color 0.5s ease, color 0.5s ease;
         }
@@ -54,7 +54,7 @@
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -80,7 +80,7 @@
         .menu-links a {
             color: var(--text-color);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 600;
@@ -226,6 +226,134 @@
             opacity: 0.6;
         }
 
+        /* ── MANIFESTO SECTION ── */
+        .manifesto {
+            padding: 0rem 5% 10rem;
+            overflow: hidden;
+        }
+
+        .manifesto-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-rows: auto auto;
+            row-gap: 5rem;
+        }
+
+        /* Row 1: left block + right block side by side, right anchored to bottom */
+        .m-row-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 2rem;
+        }
+
+        .m-left {
+            flex: 1;
+        }
+
+        .m-right {
+            text-align: right;
+            flex-shrink: 0;
+            opacity: 0;
+            transform: translateY(30px);
+            padding-bottom: 0.5rem;
+            align-self: flex-end;
+            margin-bottom: -1rem;
+        }
+
+        .m-line {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            line-height: 1.05;
+            opacity: 0;
+            transform: translateY(40px);
+            will-change: transform, opacity;
+        }
+
+        .m-large {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 400;
+            color: var(--text-color);
+            opacity: 0.4;
+            margin-bottom: 0.2rem;
+        }
+
+        .m-xlarge {
+            font-size: clamp(3.8rem, 8.5vw, 7rem);
+            font-weight: 600;
+            letter-spacing: -2px;
+            color: var(--text-color);
+        }
+
+        .m-xlarge.m-indent {
+            padding-left: clamp(2rem, 8vw, 9rem);
+        }
+
+        .m-accent {
+            font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--accent-color);
+            margin-top: 0.3rem;
+        }
+
+        /* Right block: meeting info */
+        .m-when {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+            font-weight: 600;
+            letter-spacing: -1px;
+            line-height: 1.05;
+            color: var(--text-color);
+        }
+
+        .m-when.dim {
+            font-weight: 400;
+            font-style: italic;
+            font-size: clamp(1.2rem, 2.5vw, 2rem);
+            opacity: 0.5;
+            letter-spacing: 0;
+            margin-top: 0.6rem;
+        }
+
+        .m-when.small {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(1.5rem, 2.5vw, 1.87rem);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            opacity: 0.45;
+            font-style: normal;
+            margin-top: 1.2rem;
+        }
+
+        /* Row 2: invite — full width, prominent */
+        .m-invite-wrap {
+            border-top: none;
+            padding-top: 7rem;
+            opacity: 0;
+            transform: translateY(20px);
+            text-align: center;
+        }
+
+        .m-invite {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4.5vw, 3.8rem);
+            font-weight: 400;
+            font-style: italic;
+            line-height: 1.25;
+            color: var(--text-color);
+        }
+
+        .m-invite em {
+            font-style: normal;
+            color: var(--accent-color);
+        }
+
+        /* ── END MANIFESTO ── */
+
         @media (max-width: 768px) {
             nav {
                 flex-direction: column;
@@ -240,6 +368,14 @@
                 margin-top: 1rem;
             }
             .hero-title { font-size: 3.5rem; }
+            .m-row-top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 3rem;
+            }
+            .m-right {
+                text-align: left;
+            }
         }
         @media (max-width: 480px) {
             .hero-title { font-size: 2.8rem; }
@@ -272,9 +408,39 @@
 
     <main class="hero">
         <h1 class="hero-title">La palabra <br><i>que trasciende</i>.</h1>
-        <p class="hero-subtitle">Un espacio para la creación, el encuentro y la voz de los escritores. Descubre nuestras historias.</p>
+        <p class="hero-subtitle">Urabá Escribe es un lugar donde la literatura es encuentro, comunidad y creación. Descubre quiénes somos, explora nuestros textos y anímate a escribir con nosotros.</p>
         <button class="btn-explorar" onclick="window.location.href='textos.html'">Leer textos</button>
     </main>
+
+    <section class="manifesto" id="manifesto">
+        <div class="manifesto-inner">
+
+            <div class="m-row-top">
+                <!-- Izquierda: el manifiesto principal -->
+                <div class="m-left">
+                    <span class="m-line m-large">Desde 1984,</span>
+                    <span class="m-line m-xlarge">formamos</span>
+                    <span class="m-line m-xlarge m-indent">lectores y</span>
+                    <span class="m-line m-xlarge">escritores</span>
+                    <span class="m-line m-accent">en Apartadó.</span>
+                </div>
+
+                <!-- Derecha: horario y lugar, anclado abajo -->
+                <div class="m-right" id="mRight">
+                    <span class="m-when">Todos los</span>
+                    <span class="m-when">viernes.</span>
+                    <span class="m-when dim">Biblioteca Federico García Lorca</span>
+                    <span class="m-when small">7:00 p.m.</span>
+                </div>
+            </div>
+
+            <!-- Invitación como cierre prominente -->
+            <div class="m-invite-wrap" id="mInvite">
+                <p class="m-invite">Ven, disfruta con nosotros<br>un espacio entre escritores, <em>amigos y café.</em></p>
+            </div>
+
+        </div>
+    </section>
 
     <footer>
         <img src="logo.png" alt="Sello Urabá Escribe 1985" class="footer-logo">
@@ -296,7 +462,42 @@
               .from("nav", { opacity: 0, y: -20, duration: 1, ease: "power2.out" }, "-=1.5");
         };
 
-        // Modo oscuro persistente
+        // Animación manifiesto con Intersection Observer + GSAP
+        const mLines = document.querySelectorAll('.m-line');
+        const mRight = document.getElementById('mRight');
+        const mInvite = document.getElementById('mInvite');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const tl = gsap.timeline();
+                    tl.to(mLines, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1.1,
+                        ease: 'power3.out',
+                        stagger: 0.12
+                    })
+                    .to(mRight, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.6')
+                
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(document.getElementById('manifesto'));
+
+         const observerInvite = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    gsap.to(mInvite, { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' });
+                    observerInvite.disconnect();
+
+                     }
+            });
+        }, { threshold: 0.8 });
+
+        observerInvite.observe(mInvite);
+
         const btnTheme = document.getElementById('btnTheme');
         const body = document.body;
 
