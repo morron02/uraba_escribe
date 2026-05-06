@@ -86,7 +86,6 @@
         body.dark-mode .icon-sun { display: none; }
         body.dark-mode .icon-moon { display: block; }
 
-        /* Contenido principal */
         .donar-container {
             padding: 150px 5% 100px 5%;
             max-width: 800px;
@@ -108,10 +107,7 @@
             margin-bottom: 1.5rem;
         }
 
-        .donar-title i {
-            font-style: italic;
-            opacity: 0.7;
-        }
+        .donar-title i { font-style: italic; opacity: 0.7; }
 
         .donar-texto {
             font-size: 1.1rem;
@@ -121,7 +117,6 @@
             max-width: 600px;
         }
 
-        /* Tarjetas de pago */
         .opciones-pago {
             display: flex;
             flex-direction: column;
@@ -136,9 +131,7 @@
             transition: border-color 0.3s ease;
         }
 
-        .tarjeta-pago:hover {
-            border-color: var(--text-color);
-        }
+        .tarjeta-pago:hover { border-color: var(--text-color); }
 
         .tarjeta-label {
             font-size: 0.75rem;
@@ -165,19 +158,10 @@
             font-size: 0.95rem;
         }
 
-        .dato-fila:last-of-type {
-            border-bottom: none;
-        }
+        .dato-fila:last-of-type { border-bottom: none; }
 
-        .dato-label {
-            font-weight: 300;
-            opacity: 0.7;
-        }
-
-        .dato-valor {
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
+        .dato-label { font-weight: 300; opacity: 0.7; }
+        .dato-valor { font-weight: 600; letter-spacing: 1px; }
 
         .btn-copiar {
             margin-top: 2rem;
@@ -208,7 +192,6 @@
             color: #fff;
         }
 
-        /* Footer */
         footer {
             border-top: 1px solid var(--border-color);
             padding: 4rem 5%;
@@ -226,9 +209,7 @@
             transition: filter 0.5s ease;
         }
 
-        body.dark-mode .footer-logo {
-            filter: invert(1);
-        }
+        body.dark-mode .footer-logo { filter: invert(1); }
 
         .social-links {
             display: flex;
@@ -246,11 +227,7 @@
         }
 
         .social-links a:hover { color: var(--accent-color); }
-
-        .copyright {
-            font-size: 0.75rem;
-            opacity: 0.6;
-        }
+        .copyright { font-size: 0.75rem; opacity: 0.6; }
 
         @media (max-width: 768px) {
             nav { flex-direction: column; gap: 1.5rem; padding: 1.5rem 5%; }
@@ -262,6 +239,12 @@
     </style>
 </head>
 <body>
+
+    <script>
+        if (localStorage.getItem('tema') === 'oscuro') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
 
     <nav>
         <a href="index.html" class="logo">Taller de Escritores<br>Urabá Escribe<span>.</span></a>
@@ -287,7 +270,6 @@
 
         <div class="opciones-pago">
 
-            <!-- Bancolombia -->
             <div class="tarjeta-pago">
                 <p class="tarjeta-label">Opción 1</p>
                 <h2 class="tarjeta-entidad">Bancolombia</h2>
@@ -303,12 +285,11 @@
                     <span class="dato-label">Titular</span>
                     <span class="dato-valor">Taller de Escritores Urabá Escribe</span>
                 </div>
-                <button class="btn-copiar" onclick="copiar('621-123456-78', this)">
+                <button class="btn-copiar" onclick="copiar('62112345678', this)">
                     Copiar número
                 </button>
             </div>
 
-            <!-- Nequi -->
             <div class="tarjeta-pago">
                 <p class="tarjeta-label">Opción 2</p>
                 <h2 class="tarjeta-entidad">Nequi</h2>
@@ -357,28 +338,18 @@
             });
         }
 
+        // Modo oscuro persistente
         const btnTheme = document.getElementById('btnTheme');
-const body = document.body;
+        const body = document.body;
 
-// Aplica el modo guardado al cargar
-if (localStorage.getItem('tema') === 'oscuro') {
-    body.classList.add('dark-mode');
-}
-
-// Guarda la preferencia al hacer clic
-btnTheme.addEventListener('click', () => {
-    body.classList.toggle('dark-mode');
-    if (body.classList.contains('dark-mode')) {
-        localStorage.setItem('tema', 'oscuro');
-    } else {
-        localStorage.setItem('tema', 'claro');
-    }
-});
+        btnTheme.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('tema', 'oscuro');
+            } else {
+                localStorage.setItem('tema', 'claro');
+            }
+        });
     </script>
 </body>
-    <script>
-    if (localStorage.getItem('tema') === 'oscuro') {
-        document.body.classList.add('dark-mode');
-    }
-</script>
 </html>
