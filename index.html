@@ -11,17 +11,18 @@
 
     <style>
         :root {
-            --bg-color: #fcfcfc; 
-            --text-color: #0a0a0a; 
-            --accent-color: #d91c1c; 
-            --nav-bg: rgba(252, 252, 252, 0.8);
+            --bg-color: #fcfcfc;
+            --text-color: #0a0a0a;
+            --accent-color: #d91c1c;
+            --nav-bg: rgba(252, 252, 252, 0.9);
             --border-color: #e0e0e0;
+            --nav-height: 72px;
         }
 
         body.dark-mode {
-            --bg-color: #0a0a0a; 
-            --text-color: #fcfcfc; 
-            --nav-bg: rgba(10, 10, 10, 0.8);
+            --bg-color: #0a0a0a;
+            --text-color: #fcfcfc;
+            --nav-bg: rgba(10, 10, 10, 0.9);
             --border-color: #333333;
         }
 
@@ -34,16 +35,18 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: 'DM SANS', sans-serif;
+            font-family: 'DM Sans', sans-serif;
             overflow-x: hidden;
             transition: background-color 0.5s ease, color 0.5s ease;
         }
 
+        /* ── NAVEGACIÓN ── */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2rem 5%;
+            padding: 0 5%;
+            height: var(--nav-height);
             position: fixed;
             width: 100%;
             z-index: 100;
@@ -54,7 +57,7 @@
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -65,22 +68,23 @@
             color: var(--accent-color);
         }
 
-        .menu-container {
+        /* Nav derecha: links + toggle */
+        .nav-right {
             display: flex;
             align-items: center;
-            gap: 3rem;
+            gap: 2.5rem;
         }
 
         .menu-links {
             display: flex;
-            gap: 3rem;
+            gap: 2.5rem;
             list-style: none;
         }
 
         .menu-links a {
             color: var(--text-color);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 600;
@@ -91,18 +95,20 @@
             color: var(--accent-color);
         }
 
+        /* Toggle tema */
         .theme-toggle {
             background: none;
             border: 1px solid var(--text-color);
-            padding: 0.5rem; 
-            border-radius: 5px; 
+            padding: 0.5rem;
+            border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 38px; 
-            height: 38px;
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
         }
 
         .theme-toggle:hover {
@@ -110,10 +116,10 @@
         }
 
         .theme-toggle svg {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             stroke: var(--text-color);
-            transition: stroke 0.3s ease; 
+            transition: stroke 0.3s ease;
         }
 
         .theme-toggle:hover svg {
@@ -121,18 +127,102 @@
         }
 
         body:not(.dark-mode) .icon-moon { display: none; }
-        body:not(.dark-mode) .icon-sun { display: block; }
-        body.dark-mode .icon-sun { display: none; }
-        body.dark-mode .icon-moon { display: block; }
+        body:not(.dark-mode) .icon-sun  { display: block; }
+        body.dark-mode .icon-sun        { display: none; }
+        body.dark-mode .icon-moon       { display: block; }
 
+        /* ── HAMBURGER (solo móvil) ── */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 200;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: var(--text-color);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Hamburger → X cuando está abierto */
+        .hamburger.open span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.open span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* Menú móvil desplegable */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: var(--nav-height);
+            left: 0;
+            width: 100%;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            z-index: 99;
+            padding: 2rem 5% 2.5rem;
+            flex-direction: column;
+            gap: 0;
+            border-top: 1px solid var(--border-color);
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .mobile-menu.open {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mobile-menu li {
+            list-style: none;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .mobile-menu li:first-child {
+            border-top: none;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 1.1rem 0;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--accent-color);
+        }
+
+        /* ── HERO ── */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 5%;
+            padding: calc(var(--nav-height) + 2rem) 5% 4rem;
         }
 
         .hero-title {
@@ -147,7 +237,7 @@
 
         .hero-title i {
             font-style: italic;
-            opacity: 0.7; 
+            opacity: 0.7;
         }
 
         .hero-subtitle {
@@ -166,7 +256,7 @@
             border: 1px solid var(--text-color);
             background: transparent;
             color: var(--text-color);
-            font-family: 'Inter', sans-serif;
+            font-family: 'DM Sans', sans-serif;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 600;
@@ -181,52 +271,7 @@
             color: var(--bg-color);
         }
 
-        footer {
-            border-top: 1px solid var(--border-color);
-            padding: 4rem 5%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 2rem;
-            transition: border-color 0.5s ease;
-        }
-
-        .footer-logo {
-            max-width: 120px;
-            height: auto;
-            transition: filter 0.5s ease;
-        }
-
-        body.dark-mode .footer-logo {
-            filter: invert(1); 
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            list-style: none;
-        }
-
-        .social-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--accent-color);
-        }
-
-        .copyright {
-            font-size: 0.75rem;
-            opacity: 0.6;
-        }
-
-        /* ── MANIFESTO SECTION ── */
+        /* ── MANIFESTO ── */
         .manifesto {
             padding: 0rem 5% 10rem;
             overflow: hidden;
@@ -240,7 +285,6 @@
             row-gap: 5rem;
         }
 
-        /* Row 1: left block + right block side by side, right anchored to bottom */
         .m-row-top {
             display: flex;
             justify-content: space-between;
@@ -275,7 +319,6 @@
             font-size: clamp(2rem, 4vw, 3.2rem);
             font-weight: 400;
             color: var(--text-color);
-            opacity: 0.4;
             margin-bottom: 0.2rem;
         }
 
@@ -298,7 +341,6 @@
             margin-top: 0.3rem;
         }
 
-        /* Right block: meeting info */
         .m-when {
             display: block;
             font-family: 'Playfair Display', serif;
@@ -329,10 +371,9 @@
             margin-top: 1.2rem;
         }
 
-        /* Row 2: invite — full width, prominent */
         .m-invite-wrap {
             border-top: none;
-            padding-top: 7rem;
+            padding-top: 9em;
             opacity: 0;
             transform: translateY(20px);
             text-align: center;
@@ -352,34 +393,142 @@
             color: var(--accent-color);
         }
 
-        /* ── END MANIFESTO ── */
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 2rem;
+            transition: border-color 0.5s ease;
+        }
 
+        .footer-logo {
+            max-width: 120px;
+            height: auto;
+            transition: filter 0.5s ease;
+        }
+
+        body.dark-mode .footer-logo {
+            filter: invert(1);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            opacity: 0.6;
+        }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE — TABLET  ≤ 900px
+        ══════════════════════════════════════ */
+        @media (max-width: 900px) {
+            .nav-right .menu-links {
+                gap: 1.8rem;
+            }
+        }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE — MÓVIL  ≤ 768px
+        ══════════════════════════════════════ */
         @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-                gap: 1.5rem;
-                padding: 1.5rem 5%;
+            :root {
+                --nav-height: 64px;
             }
-            .menu-container {
-                flex-direction: column;
-                gap: 1.5rem;
+
+            /* Nav: logo + (toggle + hamburger) en una sola fila */
+            .nav-right .menu-links {
+                display: none; /* ocultar links del desktop */
             }
-            .theme-toggle {
-                margin-top: 1rem;
+
+            .hamburger {
+                display: flex;
             }
-            .hero-title { font-size: 3.5rem; }
+
+            /* El mobile-menu se activa con JS */
+            .mobile-menu {
+                display: flex; /* siempre en DOM, se controla con opacity/transform */
+            }
+
+            /* Hero */
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .btn-explorar {
+                padding: 0.9rem 2.2rem;
+                font-size: 0.75rem;
+            }
+
+            /* Manifesto */
+            .manifesto {
+                padding: 0 5% 6rem;
+            }
+
             .m-row-top {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 3rem;
             }
+
             .m-right {
                 text-align: left;
+                align-self: flex-start;
+                margin-bottom: 0;
+            }
+
+            .m-xlarge {
+                letter-spacing: -1px;
+            }
+
+            .m-xlarge.m-indent {
+                padding-left: clamp(1rem, 5vw, 3rem);
+            }
+
+            .m-invite-wrap {
+                padding-top: 4rem;
             }
         }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE — MÓVIL PEQUEÑO  ≤ 480px
+        ══════════════════════════════════════ */
         @media (max-width: 480px) {
-            .hero-title { font-size: 2.8rem; }
-            .menu-links { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+            .hero-title {
+                font-size: 2.6rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.95rem;
+            }
+
+            .m-invite {
+                font-size: clamp(1.6rem, 6vw, 2.4rem);
+            }
         }
     </style>
 </head>
@@ -391,32 +540,47 @@
         }
     </script>
 
+    <!-- ── NAVEGACIÓN ── -->
     <nav>
         <div class="logo">Taller de Escritores<br>Urabá Escribe<span>.</span></div>
-        <div class="menu-container">
+
+        <div class="nav-right">
             <ul class="menu-links">
                 <li><a href="taller.html">El Taller</a></li>
                 <li><a href="textos.html">Textos</a></li>
                 <li><a href="donar.html">Donar</a></li>
             </ul>
             <button class="theme-toggle" id="btnTheme" title="Cambiar modo de visualización">
-                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="18.36" x2="5.64" y2="16.93"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="18.36" x2="5.64" y2="16.93"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="hamburger" id="btnHamburger" aria-label="Abrir menú">
+                <span></span>
+                <span></span>
+                <span></span>
             </button>
         </div>
     </nav>
 
+    <!-- Menú móvil desplegable -->
+    <ul class="mobile-menu" id="mobileMenu">
+        <li><a href="taller.html">El Taller</a></li>
+        <li><a href="textos.html">Textos</a></li>
+        <li><a href="donar.html">Donar</a></li>
+    </ul>
+
+    <!-- ── HERO ── -->
     <main class="hero">
         <h1 class="hero-title">La palabra <br><i>que trasciende</i>.</h1>
         <p class="hero-subtitle">Urabá Escribe es un lugar donde la literatura es encuentro, comunidad y creación. Descubre quiénes somos, explora nuestros textos y anímate a escribir con nosotros.</p>
         <button class="btn-explorar" onclick="window.location.href='textos.html'">Leer textos</button>
     </main>
 
+    <!-- ── MANIFESTO ── -->
     <section class="manifesto" id="manifesto">
         <div class="manifesto-inner">
 
             <div class="m-row-top">
-                <!-- Izquierda: el manifiesto principal -->
                 <div class="m-left">
                     <span class="m-line m-large">Desde 1984,</span>
                     <span class="m-line m-xlarge">formamos</span>
@@ -425,7 +589,6 @@
                     <span class="m-line m-accent">en Apartadó.</span>
                 </div>
 
-                <!-- Derecha: horario y lugar, anclado abajo -->
                 <div class="m-right" id="mRight">
                     <span class="m-when">Todos los</span>
                     <span class="m-when">viernes.</span>
@@ -434,14 +597,18 @@
                 </div>
             </div>
 
-            <!-- Invitación como cierre prominente -->
             <div class="m-invite-wrap" id="mInvite">
-                <p class="m-invite">Ven, disfruta con nosotros<br>un espacio entre escritores, <em>amigos y café.</em></p>
+                <p class="m-invite">
+                    <span class="m-invite-line">Ven, disfruta con nosotros</span><br>
+                    <span class="m-invite-line">un espacio entre escritores,</span><br>
+                    <span class="m-invite-line"><em>amigos y café.</em></span>
+                </p>
             </div>
 
         </div>
     </section>
 
+    <!-- ── FOOTER ── -->
     <footer>
         <img src="logo.png" alt="Sello Urabá Escribe 1985" class="footer-logo">
         <ul class="social-links">
@@ -453,18 +620,18 @@
     </footer>
 
     <script>
-        // Animaciones GSAP
+        // ── ANIMACIONES GSAP ──
         window.onload = () => {
             const tl = gsap.timeline();
-            tl.to(".hero-title", { opacity: 1, y: 0, duration: 1.5, ease: "power3.out", delay: 0.2 })
+            tl.to(".hero-title",    { opacity: 1, y: 0, duration: 1.5, ease: "power3.out", delay: 0.2 })
               .to(".hero-subtitle", { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }, "-=1")
-              .to(".btn-explorar", { opacity: 1, duration: 1 }, "-=0.5")
-              .from("nav", { opacity: 0, y: -20, duration: 1, ease: "power2.out" }, "-=1.5");
+              .to(".btn-explorar",  { opacity: 1, duration: 1 }, "-=0.5")
+              .from("nav",          { opacity: 0, y: -20, duration: 1, ease: "power2.out" }, "-=1.5");
         };
 
-        // Animación manifiesto con Intersection Observer + GSAP
-        const mLines = document.querySelectorAll('.m-line');
-        const mRight = document.getElementById('mRight');
+        // ── MANIFESTO observer ──
+        const mLines  = document.querySelectorAll('.m-line');
+        const mRight  = document.getElementById('mRight');
         const mInvite = document.getElementById('mInvite');
 
         const observer = new IntersectionObserver((entries) => {
@@ -478,36 +645,58 @@
                         ease: 'power3.out',
                         stagger: 0.12
                     })
-                    .to(mRight, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.6')
-                
+                    .to(mRight, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.6');
+                    // El m-large queda con opacidad reducida después de la animación
+                    tl.to('.m-large', { opacity: 0.4, duration: 0.4 }, '-=0.3');
                 }
             });
         }, { threshold: 0.1 });
 
         observer.observe(document.getElementById('manifesto'));
 
-         const observerInvite = new IntersectionObserver((entries) => {
+        const observerInvite = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    gsap.to(mInvite, { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' });
+                    const lines = document.querySelectorAll('.m-invite-line');
+                    gsap.set(lines, { opacity: 0, y: 20 });
+                    gsap.to(mInvite, { opacity: 1, duration: 0.1 });
+                    gsap.to(lines, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: 'power3.out',
+                        stagger: 0.5
+                    });
                     observerInvite.disconnect();
-
-                     }
+                }
             });
-        }, { threshold: 0.8 });
+        }, { threshold: 0.5 });
 
         observerInvite.observe(mInvite);
 
+        // ── TEMA CLARO / OSCURO ──
         const btnTheme = document.getElementById('btnTheme');
-        const body = document.body;
-
         btnTheme.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('tema', 'oscuro');
-            } else {
-                localStorage.setItem('tema', 'claro');
-            }
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('tema', document.body.classList.contains('dark-mode') ? 'oscuro' : 'claro');
+        });
+
+        // ── HAMBURGER ──
+        const btnHamburger = document.getElementById('btnHamburger');
+        const mobileMenu   = document.getElementById('mobileMenu');
+
+        btnHamburger.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.toggle('open');
+            btnHamburger.classList.toggle('open', isOpen);
+            btnHamburger.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+        });
+
+        // Cerrar menú al hacer clic en un link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                btnHamburger.classList.remove('open');
+            });
         });
     </script>
 </body>
