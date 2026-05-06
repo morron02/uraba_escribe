@@ -647,7 +647,7 @@
                 if (e.isIntersecting) {
                     const tl = gsap.timeline();
                     tl.to(mLines,  { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', stagger: 0.12 })
-                      .to(mRight,  { opacity: 1, y: 80, duration: 1,   ease: 'power3.out' }, '-=0.6')
+                      .to(mRight,  { opacity: 1, y: window.innerWidth > 768 ? 80 : 0, duration: 1,   ease: 'power3.out' }, '-=0.6')
                       .to('.m-large', { opacity: 0.4, duration: 0.4 }, '-=0.3');
                 }
             });
