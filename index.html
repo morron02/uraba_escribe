@@ -321,4 +321,347 @@
         }
 
         .m-accent {
-            font-size
+            font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--accent-color);
+            margin-top: 0.3rem;
+        }
+
+        .m-when {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+            font-weight: 600;
+            letter-spacing: -1px;
+            line-height: 1.05;
+            color: var(--text-color);
+        }
+
+        .m-when.dim {
+            font-weight: 400;
+            font-style: italic;
+            font-size: clamp(1.2rem, 2.5vw, 2rem);
+            opacity: 0.5;
+            letter-spacing: 0;
+            margin-top: 0.6rem;
+        }
+
+        .m-when.small {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(1.5rem, 2.5vw, 1.87rem);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            opacity: 0.45;
+            font-style: normal;
+            margin-top: 1.2rem;
+        }
+
+        .m-invite-wrap {
+            border-top: none;
+            padding-top: 9em;
+            opacity: 0;
+            transform: translateY(20px);
+            text-align: center;
+        }
+
+        .m-invite {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4.5vw, 3.8rem);
+            font-weight: 400;
+            font-style: italic;
+            line-height: 1.25;
+            color: var(--text-color);
+        }
+
+        .m-invite em {
+            font-style: normal;
+            color: var(--accent-color);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 2rem;
+            transition: border-color 0.5s ease;
+        }
+
+        .footer-logo {
+            max-width: 120px;
+            height: auto;
+            transition: filter 0.5s ease;
+        }
+
+        body.dark-mode .footer-logo {
+            filter: invert(1);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            opacity: 0.6;
+        }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE — TABLET ≤ 900px
+        ══════════════════════════════════════ */
+        @media (max-width: 900px) {
+            .nav-right .menu-links { gap: 1.8rem; }
+        }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE — MÓVIL ≤ 768px
+        ══════════════════════════════════════ */
+        @media (max-width: 768px) {
+            :root { --nav-height: 84px; }
+
+            .nav-right .menu-links { display: none; }
+            .hamburger { display: flex; }
+            .mobile-menu { display: flex; }
+
+            /* Hero */
+            .hero-title { font-size: 3.5rem; }
+            .hero-subtitle { font-size: 1rem; }
+            .btn-explorar { padding: 0.9rem 2.2rem; font-size: 0.75rem; }
+
+            /* Manifesto */
+            .manifesto { padding: 0 5% 6rem; }
+
+            .m-row-top {
+                flex-direction: row;
+                align-items: flex-end;
+                gap: 1rem;
+            }
+
+            .m-left {
+                flex: 1 1 55%;
+                min-width: 0;
+            }
+
+            .m-right {
+                flex: 1 1 40%;
+                text-align: right;
+                align-self: flex-end;
+                margin-bottom: 0;
+            }
+
+            .m-when {
+                font-size: clamp(1.6rem, 5.5vw, 3rem);
+                letter-spacing: -0.5px;
+            }
+
+            .m-when.dim { font-size: clamp(0.75rem, 2.2vw, 1.2rem); }
+
+            .m-when.small {
+                font-size: clamp(0.7rem, 2vw, 1rem);
+                letter-spacing: 1.5px;
+            }
+
+            .m-xlarge { letter-spacing: -1px; }
+            .m-xlarge.m-indent { padding-left: clamp(1rem, 5vw, 3rem); }
+
+            .m-invite-wrap { padding-top: 4rem; }
+            .m-invite { font-size: clamp(2.4rem, 7vw, 3.4rem); }
+        }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE — MÓVIL PEQUEÑO ≤ 480px
+        ══════════════════════════════════════ */
+        @media (max-width: 480px) {
+            .hero-title { font-size: 2.6rem; }
+            .hero-subtitle { font-size: 0.95rem; }
+            .m-invite { font-size: clamp(2.2rem, 6.5vw, 3rem); }
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        if (localStorage.getItem('tema') === 'oscuro') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+
+    <!-- ── NAVEGACIÓN ── -->
+    <nav>
+        <div class="logo">Taller de Escritores<br>Urabá Escribe<span>.</span></div>
+
+        <div class="nav-right">
+            <ul class="menu-links">
+                <li><a href="taller.html">El Taller</a></li>
+                <li><a href="textos.html">Textos</a></li>
+                <li><a href="donar.html">Donar</a></li>
+            </ul>
+            <button class="theme-toggle" id="btnTheme" title="Cambiar modo de visualización">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="18.36" x2="5.64" y2="16.93"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="hamburger" id="btnHamburger" aria-label="Abrir menú">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Menú móvil desplegable -->
+    <ul class="mobile-menu" id="mobileMenu">
+        <li><a href="taller.html">El Taller</a></li>
+        <li><a href="textos.html">Textos</a></li>
+        <li><a href="donar.html">Donar</a></li>
+    </ul>
+
+    <!-- ── HERO ── -->
+    <main class="hero">
+        <h1 class="hero-title">La palabra <br><i>que trasciende</i>.</h1>
+        <p class="hero-subtitle">Urabá Escribe es un lugar donde la literatura es encuentro, comunidad y creación. Descubre quiénes somos, explora nuestros textos y anímate a escribir con nosotros.</p>
+        <button class="btn-explorar" onclick="window.location.href='textos.html'">Leer textos</button>
+    </main>
+
+    <!-- ── MANIFESTO ── -->
+    <section class="manifesto" id="manifesto">
+        <div class="manifesto-inner">
+
+            <div class="m-row-top">
+                <div class="m-left">
+                    <span class="m-line m-large">Desde 1984,</span>
+                    <span class="m-line m-xlarge">formamos</span>
+                    <span class="m-line m-xlarge m-indent">lectores y</span>
+                    <span class="m-line m-xlarge">escritores</span>
+                    <span class="m-line m-accent">en Apartadó.</span>
+                </div>
+
+                <div class="m-right" id="mRight">
+                    <span class="m-when">Todos los</span>
+                    <span class="m-when">viernes.</span>
+                    <span class="m-when dim">Biblioteca Federico García Lorca</span>
+                    <span class="m-when small">7:00 p.m.</span>
+                </div>
+            </div>
+
+            <div class="m-invite-wrap" id="mInvite">
+                <p class="m-invite">
+                    <span class="m-invite-line">Ven, disfruta con nosotros</span><br>
+                    <span class="m-invite-line">un espacio entre escritores,</span><br>
+                    <span class="m-invite-line"><em>amigos y café.</em></span>
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer>
+        <img src="logo.png" alt="Sello Urabá Escribe 1985" class="footer-logo">
+        <ul class="social-links">
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+        <p class="copyright">© 2026 Taller de Escritores Urabá Escribe. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // ── ANIMACIONES GSAP ──
+        window.onload = () => {
+            const tl = gsap.timeline();
+            tl.to(".hero-title",    { opacity: 1, y: 0, duration: 1.5, ease: "power3.out", delay: 0.2 })
+              .to(".hero-subtitle", { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }, "-=1")
+              .to(".btn-explorar",  { opacity: 1, duration: 1 }, "-=0.5")
+              .from("nav",          { opacity: 0, y: -20, duration: 1, ease: "power2.out" }, "-=1.5");
+        };
+
+        // ── MANIFESTO observer ──
+        const mLines  = document.querySelectorAll('.m-line');
+        const mRight  = document.getElementById('mRight');
+        const mInvite = document.getElementById('mInvite');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const tl = gsap.timeline();
+                    tl.to(mLines, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1.1,
+                        ease: 'power3.out',
+                        stagger: 0.12
+                    })
+                    .to(mRight, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.6');
+                    tl.to('.m-large', { opacity: 0.4, duration: 0.4 }, '-=0.3');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(document.getElementById('manifesto'));
+
+        const observerInvite = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const lines = document.querySelectorAll('.m-invite-line');
+                    gsap.set(lines, { opacity: 0, y: 20 });
+                    gsap.to(mInvite, { opacity: 1, duration: 0.1 });
+                    gsap.to(lines, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: 'power3.out',
+                        stagger: 0.5
+                    });
+                    observerInvite.disconnect();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observerInvite.observe(mInvite);
+
+        // ── TEMA CLARO / OSCURO ──
+        const btnTheme = document.getElementById('btnTheme');
+        btnTheme.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('tema', document.body.classList.contains('dark-mode') ? 'oscuro' : 'claro');
+        });
+
+        // ── HAMBURGER ──
+        const btnHamburger = document.getElementById('btnHamburger');
+        const mobileMenu   = document.getElementById('mobileMenu');
+
+        btnHamburger.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.toggle('open');
+            btnHamburger.classList.toggle('open', isOpen);
+            btnHamburger.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                btnHamburger.classList.remove('open');
+            });
+        });
+    </script>
+</body>
+</html>
