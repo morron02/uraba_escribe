@@ -303,12 +303,29 @@
         };
 
         // Lógica del Modo Claro / Oscuro
-        const btnTheme = document.getElementById('btnTheme');
-        const body = document.body;
+       // Modo oscuro persistente
+const btnTheme = document.getElementById('btnTheme');
+const body = document.body;
 
-        btnTheme.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-        });
+// Aplica el modo guardado al cargar
+if (localStorage.getItem('tema') === 'oscuro') {
+    body.classList.add('dark-mode');
+}
+
+// Guarda la preferencia al hacer clic
+btnTheme.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    if (body.classList.contains('dark-mode')) {
+        localStorage.setItem('tema', 'oscuro');
+    } else {
+        localStorage.setItem('tema', 'claro');
+    }
+});
     </script>
 </body>
+    <script>
+    if (localStorage.getItem('tema') === 'oscuro') {
+        document.body.classList.add('dark-mode');
+    }
+</script>
 </html>
