@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Taller | Urabá Escribe</title>
     <link rel="icon" type="image/png" href="favicon.png">
-        
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
@@ -14,15 +13,15 @@
             --bg-color: #fcfcfc;
             --text-color: #0a0a0a;
             --accent-color: #d91c1c;
-            --nav-bg: rgba(252, 252, 252, 0.8);
+            --nav-bg: rgba(252, 252, 252, 0.92);
             --border-color: #e0e0e0;
         }
 
         body.dark-mode {
             --bg-color: #0a0a0a;
             --text-color: #fcfcfc;
-            --nav-bg: rgba(10, 10, 10, 0.8);
-            --border-color: #333333;
+            --nav-bg: rgba(10, 10, 10, 0.92);
+            --border-color: #333;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,18 +29,22 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: 'DM SANS', sans-serif;
+            font-family: 'DM Sans', sans-serif;
             overflow-x: hidden;
             transition: background-color 0.5s ease, color 0.5s ease;
         }
 
+        /* ════════════════════════════
+           NAV
+        ════════════════════════════ */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2rem 5%;
+            padding: 1.6rem 5%;
             position: fixed;
             width: 100%;
+            top: 0;
             z-index: 100;
             background-color: var(--nav-bg);
             backdrop-filter: blur(10px);
@@ -50,46 +53,142 @@
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.rem;
+            font-size: 1.05rem;
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
-            line-height: 1.3;
+            line-height: 1.35;
             text-decoration: none;
             color: var(--text-color);
         }
 
         .logo span { color: var(--accent-color); }
 
-        .menu-container { display: flex; align-items: center; gap: 3rem; }
-        .menu-links { display: flex; gap: 3rem; list-style: none; }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .menu-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
         .menu-links a {
             color: var(--text-color);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 600;
             transition: color 0.3s ease;
         }
+
         .menu-links a:hover { color: var(--accent-color); }
 
         .theme-toggle {
-            background: none; border: 1px solid var(--text-color); padding: 0.5rem;
-            border-radius: 5px; cursor: pointer; transition: all 0.3s ease;
-            display: flex; align-items: center; justify-content: center; width: 38px; height: 38px;
+            background: none;
+            border: 1px solid var(--text-color);
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
         }
-        .theme-toggle:hover { background-color: var(--text-color); }
-        .theme-toggle svg { width: 20px; height: 20px; stroke: var(--text-color); transition: stroke 0.3s ease; }
-        .theme-toggle:hover svg { stroke: var(--bg-color); }
-        body:not(.dark-mode) .icon-moon { display: none; }
-        body:not(.dark-mode) .icon-sun { display: block; }
-        body.dark-mode .icon-sun { display: none; }
-        body.dark-mode .icon-moon { display: block; }
 
-        /* Hero del taller */
+        .theme-toggle:hover { background-color: var(--text-color); }
+
+        .theme-toggle svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-color);
+            transition: stroke 0.3s ease;
+        }
+
+        .theme-toggle:hover svg { stroke: var(--bg-color); }
+
+        body:not(.dark-mode) .icon-moon { display: none; }
+        body:not(.dark-mode) .icon-sun  { display: block; }
+        body.dark-mode .icon-sun        { display: none; }
+        body.dark-mode .icon-moon       { display: block; }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 26px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: var(--text-color);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        /* Menú móvil */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            width: 100%;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            z-index: 99;
+            padding: 0 5% 1.5rem;
+            flex-direction: column;
+            border-bottom: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(-8px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .mobile-menu.open {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mobile-menu li {
+            list-style: none;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 1.1rem 0;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu a:hover { color: var(--accent-color); }
+
+        /* ════════════════════════════
+           HERO DEL TALLER
+        ════════════════════════════ */
         .taller-hero {
-            padding: 180px 5% 80px 5%;
+            padding: 12rem 5% 5rem;
             max-width: 900px;
             margin: 0 auto;
             opacity: 0;
@@ -126,7 +225,7 @@
             font-weight: 600;
         }
 
-        /* Línea divisoria */
+        /* Divisor */
         .divisor {
             width: 100%;
             height: 1px;
@@ -136,30 +235,7 @@
             opacity: 0;
         }
 
-        /* Cuerpo del texto */
-        .taller-body {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 5% 100px 5%;
-        }
-
-        .taller-parrafo {
-            font-size: 1.15rem;
-            line-height: 1.9;
-            font-weight: 300;
-            opacity: 0.85;
-            text-align: justify;
-            padding: 4rem 0;
-            border-bottom: 1px solid var(--border-color);
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .taller-parrafo:last-of-type {
-            border-bottom: none;
-        }
-
-        /* Cifras destacadas */
+        /* Cifras */
         .cifras {
             display: flex;
             gap: 0;
@@ -196,7 +272,29 @@
             font-weight: 600;
         }
 
-        /* Footer */
+        /* Cuerpo */
+        .taller-body {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 5% 8rem;
+        }
+
+        .taller-parrafo {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            font-weight: 300;
+            text-align: justify;
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .taller-parrafo:last-of-type { border-bottom: none; }
+
+        /* ════════════════════════════
+           FOOTER
+        ════════════════════════════ */
         footer {
             border-top: 1px solid var(--border-color);
             padding: 4rem 5%;
@@ -223,14 +321,72 @@
         .social-links a:hover { color: var(--accent-color); }
         .copyright { font-size: 0.75rem; opacity: 0.6; }
 
+        /* ════════════════════════════
+           RESPONSIVE — TABLET ≤ 900px
+        ════════════════════════════ */
+        @media (max-width: 900px) {
+            .menu-links { gap: 1.8rem; }
+        }
+
+        /* ════════════════════════════
+           RESPONSIVE — MÓVIL ≤ 768px
+        ════════════════════════════ */
         @media (max-width: 768px) {
-            nav { flex-direction: column; gap: 1.5rem; padding: 1.5rem 5%; }
-            .menu-container { flex-direction: column; gap: 1.5rem; }
-            .taller-hero { padding-top: 200px; }
-            .taller-title { font-size: 3rem; }
-            .cifras { flex-direction: column; }
-            .cifra-item { border-right: none; border-bottom: 1px solid var(--border-color); }
+
+            /* Nav */
+            .menu-links  { display: none; }
+            .hamburger   { display: flex; }
+            .mobile-menu { display: flex; }
+
+            /* Hero */
+            .taller-hero {
+                padding: 9rem 6% 3.5rem;
+            }
+
+            .taller-title {
+                font-size: 3rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .taller-fecha {
+                font-size: 0.78rem;
+                letter-spacing: 1.5px;
+            }
+
+            /* Cifras: apiladas en columna */
+            .cifras {
+                flex-direction: column;
+                margin: 0;
+            }
+
+            .cifra-item {
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 2rem;
+            }
+
             .cifra-item:last-child { border-bottom: none; }
+
+            .cifra-numero { font-size: 2.8rem; }
+
+            /* Cuerpo */
+            .taller-body {
+                padding: 0 6% 5rem;
+            }
+
+            .taller-parrafo {
+                font-size: 1rem;
+                line-height: 1.8;
+                padding: 2.5rem 0;
+                text-align: left;
+            }
+        }
+
+        /* ════════════════════════════
+           RESPONSIVE — MÓVIL ≤ 480px
+        ════════════════════════════ */
+        @media (max-width: 480px) {
+            .taller-title { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -242,9 +398,10 @@
         }
     </script>
 
-    <nav>
+    <!-- NAV -->
+    <nav id="mainNav">
         <a href="index.html" class="logo">Taller de Escritores<br>Urabá Escribe<span>.</span></a>
-        <div class="menu-container">
+        <div class="nav-right">
             <ul class="menu-links">
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="taller.html">El Taller</a></li>
@@ -252,11 +409,22 @@
                 <li><a href="donar.html">Donar</a></li>
             </ul>
             <button class="theme-toggle" id="btnTheme" title="Cambiar modo">
-                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="18.36" x2="5.64" y2="16.93"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="18.36" x2="5.64" y2="16.93"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="hamburger" id="btnHamburger" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
             </button>
         </div>
     </nav>
+
+    <!-- MENÚ MÓVIL -->
+    <ul class="mobile-menu" id="mobileMenu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="taller.html">El Taller</a></li>
+        <li><a href="textos.html">Textos</a></li>
+        <li><a href="donar.html">Donar</a></li>
+    </ul>
 
     <main>
 
@@ -268,7 +436,6 @@
 
         <hr class="divisor">
 
-        <!-- Cifras destacadas -->
         <div class="cifras" style="max-width: 900px; margin: 0 auto;">
             <div class="cifra-item">
                 <div class="cifra-numero">40</div>
@@ -285,23 +452,18 @@
         </div>
 
         <div class="taller-body">
-
             <p class="taller-parrafo">
                 El Taller de Escritores Urabá Escribe nació en Apartadó en 1985 como una tertulia literaria de fin de semana, con encuentros alternados entre buhardillas, patios de casas de los contertulios y la Casa de la Cultura. Muy pronto adquirió forma de taller y publicó su primer libro, <em>Poteas y Pirontes</em>, de Juan Mares (1987), título inaugural de la Colección Urabá Escribe, sello editorial propio que hoy supera las veinte publicaciones. Para 2010, cuando celebró sus primeros 25 años, el taller ya contaba con el apoyo de la Biblioteca Federico García Lorca y la Secretaría de Educación de Apartadó, y había organizado su trabajo formativo en tres ejes anuales: poesía, cuento y novela corta.
             </p>
-
             <p class="taller-parrafo">
                 Con el paso del tiempo, su labor trascendió el espacio interno del taller y se proyectó hacia colegios, universidades, revistas y medios regionales, al tiempo que fortaleció el intercambio con escritores y colectivos de Medellín y del resto del país. En diagnósticos recientes sobre literatura en Antioquia, Urabá Escribe aparece identificado como uno de los procesos de escritura más destacados de la subregión de Urabá; además, la Red Relata del Ministerio de Cultura lo ha presentado como uno de sus talleres más activos, con ciclos de formación, recitales y lecturas en diálogo con la naturaleza del territorio.
             </p>
-
             <p class="taller-parrafo">
                 Otro de sus aportes más significativos es FENALPA, el Festival Nacional del Libro y la Poesía de Apartadó, un espacio que ha ido consolidándose como una de las plataformas literarias más vitales del Caribe antioqueño y del país. Más que un evento, FENALPA se ha configurado como un lugar de encuentro entre la palabra y el territorio: un escenario donde convergen escritores, lectores, editores y artistas en torno a la lectura, la oralidad y la creación. A lo largo de sus distintas ediciones —que alcanzaron su séptima versión en 2025, en coincidencia con los cuarenta años del taller— el festival ha construido una identidad propia, caracterizada por el diálogo entre lo local y lo nacional, entre la tradición oral de Urabá y las diversas corrientes de la literatura contemporánea.
             </p>
-
             <p class="taller-parrafo">
                 En su trayectoria, Urabá Escribe ha dejado de ser solo un taller para convertirse en un verdadero proceso cultural: ha formado lectores y escritores, ha impulsado la publicación de nuevas voces y ha contribuido a tejer una red de intercambio literario entre Urabá, Antioquia y el país.
             </p>
-
         </div>
 
     </main>
@@ -317,24 +479,45 @@
     </footer>
 
     <script>
+        // Posicionar menú móvil bajo el nav real
+        const mainNav    = document.getElementById('mainNav');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        function setMenuTop() {
+            mobileMenu.style.top = mainNav.offsetHeight + 'px';
+        }
+        setMenuTop();
+        window.addEventListener('resize', setMenuTop);
+
+        // GSAP
         window.onload = () => {
-            gsap.from("nav", { opacity: 0, y: -20, duration: 1, ease: "power2.out" });
-            gsap.to(".taller-hero", { opacity: 1, y: 0, duration: 1.2, ease: "power3.out", delay: 0.2 });
-            gsap.to(".divisor", { opacity: 1, duration: 1, delay: 0.8 });
-            gsap.to(".cifras", { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 1 });
-            gsap.to(".taller-parrafo", { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power3.out", delay: 1.2 });
+            gsap.from('nav', { opacity: 0, y: -20, duration: 1, ease: 'power2.out' });
+            gsap.to('.taller-hero',    { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.2 });
+            gsap.to('.divisor',        { opacity: 1, duration: 1, delay: 0.8 });
+            gsap.to('.cifras',         { opacity: 1, y: 0, duration: 1, ease: 'power3.out', delay: 1 });
+            gsap.to('.taller-parrafo', { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: 'power3.out', delay: 1.2 });
         };
 
-        const btnTheme = document.getElementById('btnTheme');
-        const body = document.body;
+        // Tema
+        document.getElementById('btnTheme').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('tema', document.body.classList.contains('dark-mode') ? 'oscuro' : 'claro');
+        });
 
-        btnTheme.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('tema', 'oscuro');
-            } else {
-                localStorage.setItem('tema', 'claro');
-            }
+        // Hamburger
+        const btnHamburger = document.getElementById('btnHamburger');
+
+        btnHamburger.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.toggle('open');
+            btnHamburger.classList.toggle('open', isOpen);
+            btnHamburger.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                btnHamburger.classList.remove('open');
+            });
         });
     </script>
 </body>
