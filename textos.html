@@ -74,7 +74,7 @@
         .menu-links a:hover { color: var(--accent-color); }
 
         .theme-toggle {
-            background: none; border: 1px solid var(--text-color); padding: 0.5rem; 
+            background: none; border: 1px solid var(--text-color); padding: 0.5rem;
             border-radius: 5px; cursor: pointer; transition: all 0.3s ease;
             display: flex; align-items: center; justify-content: center; width: 38px; height: 38px;
         }
@@ -150,7 +150,7 @@
             text-decoration: none;
             color: var(--text-color);
             transition: padding-left 0.4s ease, opacity 0.3s ease;
-            opacity: 0; 
+            opacity: 0;
             transform: translateY(20px);
         }
 
@@ -194,6 +194,49 @@
             transform: translateX(0);
         }
 
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 2rem;
+            transition: border-color 0.5s ease;
+        }
+
+        .footer-logo {
+            max-width: 120px;
+            height: auto;
+            transition: filter 0.5s ease;
+        }
+
+        body.dark-mode .footer-logo {
+            filter: invert(1);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover { color: var(--accent-color); }
+
+        .copyright {
+            font-size: 0.75rem;
+            opacity: 0.6;
+        }
+
         @media (max-width: 768px) {
             nav { flex-direction: column; gap: 1.5rem; padding: 1.5rem 5%; }
             .menu-container { flex-direction: column; gap: 1.5rem; }
@@ -201,55 +244,15 @@
             .directorio-title { font-size: 2.5rem; }
             .text-title { font-size: 1.5rem; }
         }
-
-footer {
-    border-top: 1px solid var(--border-color);
-    padding: 4rem 5%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 2rem;
-    transition: border-color 0.5s ease;
-}
-
-.footer-logo {
-    max-width: 120px;
-    height: auto;
-    transition: filter 0.5s ease;
-}
-
-body.dark-mode .footer-logo {
-    filter: invert(1);
-}
-
-.social-links {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-}
-
-.social-links a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: color 0.3s ease;
-}
-
-.social-links a:hover {
-    color: var(--accent-color);
-}
-
-.copyright {
-    font-size: 0.75rem;
-    opacity: 0.6;
-}
-
     </style>
 </head>
 <body>
+
+    <script>
+        if (localStorage.getItem('tema') === 'oscuro') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
 
     <nav>
         <a href="index.html" class="logo">Taller de Escritores<br>Urabá Escribe<span>.</span></a>
@@ -274,13 +277,20 @@ body.dark-mode .footer-logo {
             </div>
         </div>
 
-        <ul class="text-list" id="listaTextos">
-            <!-- La lista se inserta por JavaScript -->
-        </ul>
+        <ul class="text-list" id="listaTextos"></ul>
     </main>
 
+    <footer>
+        <img src="logo.png" alt="Sello Urabá Escribe 1985" class="footer-logo">
+        <ul class="social-links">
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+        <p class="copyright">© 2026 Taller de Escritores Urabá Escribe. Todos los derechos reservados.</p>
+    </footer>
+
     <script>
-        // Único texto real en la base de datos
         const baseDeDatos = [
             { id: 1, titulo: "Una noche en Suavesón", autor: "Albeiro Flórez Villa", url: "perfil.html?id=1" }
         ];
@@ -289,9 +299,9 @@ body.dark-mode .footer-logo {
         const buscador = document.getElementById('buscador');
 
         function mostrarTextos(textos) {
-            listaTextos.innerHTML = ''; 
+            listaTextos.innerHTML = '';
 
-            if(textos.length === 0) {
+            if (textos.length === 0) {
                 listaTextos.innerHTML = '<p style="text-align:center; margin-top:3rem; font-family:\'Playfair Display\', serif; font-style:italic; opacity:0.6; font-size:1.2rem;">Ningún texto coincide con tu búsqueda.</p>';
                 return;
             }
@@ -318,34 +328,31 @@ body.dark-mode .footer-logo {
         buscador.addEventListener('input', (e) => {
             const palabraBuscada = e.target.value.toLowerCase();
             const resultados = baseDeDatos.filter(texto => {
-                return texto.titulo.toLowerCase().includes(palabraBuscada) || 
+                return texto.titulo.toLowerCase().includes(palabraBuscada) ||
                        texto.autor.toLowerCase().includes(palabraBuscada);
             });
             mostrarTextos(resultados);
         });
 
         window.onload = () => {
-            mostrarTextos(baseDeDatos); 
+            mostrarTextos(baseDeDatos);
             gsap.from(".directorio-title", { opacity: 0, y: 20, duration: 1, ease: "power2.out" });
             gsap.from(".search-input", { opacity: 0, width: "50%", duration: 1, ease: "power2.out", delay: 0.3 });
             gsap.from("nav", { opacity: 0, y: -20, duration: 1, ease: "power2.out" });
         };
 
+        // Modo oscuro persistente
         const btnTheme = document.getElementById('btnTheme');
+        const body = document.body;
+
         btnTheme.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('tema', 'oscuro');
+            } else {
+                localStorage.setItem('tema', 'claro');
+            }
         });
     </script>
-<footer>
-    <img src="logo.png" alt="Sello Urabá Escribe 1985" class="footer-logo">
-    
-    <ul class="social-links">
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">Facebook</a></li>
-        <li><a href="#">Contacto</a></li>
-    </ul>
-    
-    <p class="copyright">© 2026 Taller de Escritores Urabá Escribe. Todos los derechos reservados.</p>
-</footer>
 </body>
 </html>
