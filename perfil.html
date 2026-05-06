@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Una noche en Suavesón - Albeiro Flórez Villa</title>
+    <title>Una noche en Suavesón - Albeiro Flores Villa</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -34,7 +34,6 @@
             transition: background-color 0.5s ease, color 0.5s ease;
         }
 
-        /* --- Navegación --- */
         nav {
             display: flex;
             justify-content: space-between;
@@ -74,7 +73,6 @@
         }
         .menu-links a:hover { color: var(--accent-color); }
 
-        /* Botón Tema */
         .theme-toggle {
             background: none; border: 1px solid var(--text-color); padding: 0.5rem; 
             border-radius: 5px; cursor: pointer; transition: all 0.3s ease;
@@ -88,14 +86,12 @@
         body.dark-mode .icon-sun { display: none; }
         body.dark-mode .icon-moon { display: block; }
 
-        /* --- Contenedor Principal --- */
         .detalle-container {
             padding: 150px 5% 100px 5%;
             max-width: 1100px;
             margin: 0 auto;
         }
 
-        /* --- Sección Superior (Libro / Descarga) --- */
         .seccion-libro {
             display: flex;
             align-items: center;
@@ -106,7 +102,6 @@
 
         .info-descarga {
             flex: 1;
-            /* GSAP inicial */
             opacity: 0;
             transform: translateX(-30px);
         }
@@ -144,20 +139,16 @@
             color: #fff;
         }
 
-        .btn-descarga svg {
-            width: 20px; height: 20px;
-        }
+        .btn-descarga svg { width: 20px; height: 20px; }
 
         .imagen-libro {
             flex: 1;
             display: flex;
             justify-content: flex-end;
-            /* GSAP inicial */
             opacity: 0;
             transform: translateX(30px);
         }
 
-        /* Estilo para que la imagen se vea elegante (tipo retrato o 9:16) */
         .imagen-libro img {
             max-width: 100%;
             height: auto;
@@ -166,17 +157,15 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
 
-        /* --- Línea divisoria --- */
         .divisor {
             width: 100%;
             height: 1px;
             background-color: var(--border-color);
             border: none;
             margin: 4rem 0;
-            opacity: 0; /* GSAP inicial */
+            opacity: 0;
         }
 
-        /* --- Sección Inferior (Foto / Biografía) --- */
         .seccion-autor {
             display: flex;
             align-items: center;
@@ -186,7 +175,6 @@
 
         .foto-autor {
             flex: 1;
-            /* GSAP inicial */
             opacity: 0;
             transform: translateY(30px);
         }
@@ -194,19 +182,16 @@
         .foto-autor img {
             width: 100%;
             height: auto;
-            aspect-ratio: 3/4; /* Formato retrato clásico */
+            aspect-ratio: 3/4;
             object-fit: cover;
-            filter: grayscale(100%); /* Le da un toque muy literario, quítalo si prefieres color */
+            filter: grayscale(100%);
             transition: filter 0.5s ease;
         }
 
-        .foto-autor img:hover {
-            filter: grayscale(0%);
-        }
+        .foto-autor img:hover { filter: grayscale(0%); }
 
         .bio-autor {
             flex: 1.2;
-            /* GSAP inicial */
             opacity: 0;
             transform: translateY(30px);
         }
@@ -226,68 +211,63 @@
             text-align: justify;
         }
 
-        /* --- Responsive para celulares --- */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 2rem;
+            transition: border-color 0.5s ease;
+        }
+
+        .footer-logo {
+            max-width: 120px;
+            height: auto;
+            transition: filter 0.5s ease;
+        }
+
+        body.dark-mode .footer-logo { filter: invert(1); }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover { color: var(--accent-color); }
+
+        .copyright { font-size: 0.75rem; opacity: 0.6; }
+
         @media (max-width: 768px) {
             nav { flex-direction: column; gap: 1.5rem; padding: 1.5rem 5%; }
             .menu-container { flex-direction: column; gap: 1.5rem; }
             .detalle-container { padding-top: 200px; }
-            
             .seccion-libro { flex-direction: column-reverse; text-align: center; gap: 2rem; }
             .imagen-libro { justify-content: center; }
             .titulo-obra { font-size: 2.5rem; }
-            
             .seccion-autor { flex-direction: column; gap: 3rem; }
             .nombre-autor { text-align: center; }
         }
-
-footer {
-    border-top: 1px solid var(--border-color);
-    padding: 4rem 5%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 2rem;
-    transition: border-color 0.5s ease;
-}
-
-.footer-logo {
-    max-width: 120px;
-    height: auto;
-    transition: filter 0.5s ease;
-}
-
-body.dark-mode .footer-logo {
-    filter: invert(1);
-}
-
-.social-links {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-}
-
-.social-links a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: color 0.3s ease;
-}
-
-.social-links a:hover {
-    color: var(--accent-color);
-}
-
-.copyright {
-    font-size: 0.75rem;
-    opacity: 0.6;
-}
-
     </style>
 </head>
 <body>
+
+    <script>
+        if (localStorage.getItem('tema') === 'oscuro') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
 
     <nav>
         <a href="index.html" class="logo">Taller de Escritores<br>Urabá Escribe<span>.</span></a>
@@ -305,13 +285,10 @@ body.dark-mode .footer-logo {
     </nav>
 
     <main class="detalle-container">
-        
-        <!-- ARRIBA: Título a la izquierda, Libro a la derecha -->
+
         <section class="seccion-libro">
             <div class="info-descarga">
                 <h1 class="titulo-obra">Una noche en <br><i>Suavesón</i></h1>
-                
-                <!-- El botón de descarga tiene un icono sutil integrado -->
                 <a href="suaveson.pdf" target="_blank" class="btn-descarga">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -322,34 +299,39 @@ body.dark-mode .footer-logo {
                 </a>
             </div>
             <div class="imagen-libro">
-                <!-- Reemplaza "libro.jpg" con el archivo de tu imagen -->
                 <img src="libro.jpg" alt="Portada Una Noche en Suavesón">
             </div>
         </section>
 
         <hr class="divisor">
 
-        <!-- ABAJO: Foto a la izquierda, Biografía a la derecha -->
         <section class="seccion-autor">
             <div class="foto-autor">
-                <!-- Reemplaza "autor.jpg" con la foto de Albeiro -->
-                <img src="autor.jpg" alt="Fotografía de Albeiro Flórez Villa">
+                <img src="autor.jpg" alt="Fotografía de Albeiro Flores Villa">
             </div>
             <div class="bio-autor">
-                <h2 class="nombre-autor">Albeiro Flórez Villa</h2>
+                <h2 class="nombre-autor">Albeiro Flores Villa</h2>
                 <p class="texto-bio">
-                    Albeiro Flórez es filósofo de la Universidad de Antioquia y especialista en pedagogía. Confundador del Taller de Escritores Urabá Escribe. Tiene varias obras publicadas entre cuento, novela y poesía. Es premio Regional de Poesía “El Gran Urabá”, Premio Departamental de Poesía Seduca, Premio Nacional de Poesía “Fuego en la Palabras” y Premio Nacional de Poesía “Ciro Mendía”.
+                    Albeiro Flórez es filósofo de la Universidad de Antioquia y especialista en pedagogía. Confundador del Taller de Escritores Urabá Escribe. Tiene varias obras publicadas entre cuento, novela y poesía. Es premio Regional de Poesía "El Gran Urabá", Premio Departamental de Poesía Seduca, Premio Nacional de Poesía "Fuego en la Palabras" y Premio Nacional de Poesía "Ciro Mendía".
                 </p>
             </div>
         </section>
 
     </main>
 
+    <footer>
+        <img src="logo.png" alt="Sello Urabá Escribe 1985" class="footer-logo">
+        <ul class="social-links">
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+        <p class="copyright">© 2026 Taller de Escritores Urabá Escribe. Todos los derechos reservados.</p>
+    </footer>
+
     <script>
-        // Animaciones de entrada elegantes con GSAP
         window.onload = () => {
             const tl = gsap.timeline();
-
             tl.from("nav", { opacity: 0, y: -20, duration: 1, ease: "power2.out" })
               .to(".info-descarga", { opacity: 1, x: 0, duration: 1, ease: "power3.out" }, "-=0.5")
               .to(".imagen-libro", { opacity: 1, x: 0, duration: 1, ease: "power3.out" }, "-=0.8")
@@ -358,24 +340,18 @@ body.dark-mode .footer-logo {
               .to(".bio-autor", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.8");
         };
 
-        // Lógica del Modo Oscuro
+        // Modo oscuro persistente
         const btnTheme = document.getElementById('btnTheme');
+        const body = document.body;
+
         btnTheme.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('tema', 'oscuro');
+            } else {
+                localStorage.setItem('tema', 'claro');
+            }
         });
     </script>
-
-<footer>
-    <img src="logo.png" alt="Sello Urabá Escribe 1985" class="footer-logo">
-    
-    <ul class="social-links">
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">Facebook</a></li>
-        <li><a href="#">Contacto</a></li>
-    </ul>
-    
-    <p class="copyright">© 2026 Taller de Escritores Urabá Escribe. Todos los derechos reservados.</p>
-</footer>
-
 </body>
 </html>
