@@ -1,106 +1,434 @@
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2.4rem 5%;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 100;
-    background-color: var(--nav-bg);
-    backdrop-filter: blur(10px);
-    transition: background-color 0.5s ease;
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Textos | Urabá Escribe</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-.logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.05rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    line-height: 1.35;
-    text-decoration: none;
-    color: var(--text-color);
-}
+    <style>
+        :root {
+            --bg-color: #fcfcfc; 
+            --text-color: #0a0a0a; 
+            --accent-color: #d91c1c; 
+            --nav-bg: rgba(252, 252, 252, 0.8);
+            --border-color: #e0e0e0;
+        }
 
-.logo span { color: var(--accent-color); }
+        body.dark-mode {
+            --bg-color: #0a0a0a; 
+            --text-color: #fcfcfc; 
+            --nav-bg: rgba(10, 10, 10, 0.8);
+            --border-color: #333333;
+        }
 
-.nav-right { display: flex; align-items: center; gap: 2rem; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-.menu-links { display: flex; gap: 2.5rem; list-style: none; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
 
-.menu-links a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 600;
-    transition: color 0.3s ease;
-}
-.menu-links a:hover { color: var(--accent-color); }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2.4rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            transition: background-color 0.5s ease;
+        }
 
-.theme-toggle {
-    background: none; border: 1px solid var(--text-color);
-    border-radius: 5px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    width: 36px; height: 36px; flex-shrink: 0;
-    transition: all 0.3s ease;
-}
-.theme-toggle:hover { background-color: var(--text-color); }
-.theme-toggle svg { width: 18px; height: 18px; stroke: var(--text-color); transition: stroke 0.3s ease; }
-.theme-toggle:hover svg { stroke: var(--bg-color); }
-body:not(.dark-mode) .icon-moon { display: none; }
-body:not(.dark-mode) .icon-sun  { display: block; }
-body.dark-mode .icon-sun        { display: none; }
-body.dark-mode .icon-moon       { display: block; }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            line-height: 1.35;
+            text-decoration: none;
+            color: var(--text-color);
+        }
 
-.hamburger {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 26px; height: 20px;
-    background: none; border: none; cursor: pointer; padding: 0;
-}
-.hamburger span {
-    display: block; height: 2px; width: 100%;
-    background-color: var(--text-color);
-    border-radius: 2px; transition: all 0.3s ease;
-}
-.hamburger.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+        .logo span { color: var(--accent-color); }
 
-.mobile-menu {
-    display: none;
-    position: fixed;
-    width: 100%;
-    background-color: var(--nav-bg);
-    backdrop-filter: blur(10px);
-    z-index: 99;
-    padding: 0 5% 1.5rem;
-    flex-direction: column;
-    border-bottom: 1px solid var(--border-color);
-    opacity: 0;
-    transform: translateY(-8px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.mobile-menu.open { opacity: 1; transform: translateY(0); }
-.mobile-menu li { list-style: none; border-bottom: 1px solid var(--border-color); }
-.mobile-menu a {
-    display: block; padding: 1.1rem 0;
-    color: var(--text-color); text-decoration: none;
-    font-size: 1rem; text-transform: uppercase;
-    letter-spacing: 2px; font-weight: 600;
-    transition: color 0.3s ease;
-}
-.mobile-menu a:hover { color: var(--accent-color); }
+        .nav-right { display: flex; align-items: center; gap: 2rem; }
 
-@media (max-width: 768px) {
-    .menu-links { display: none; }
-    .hamburger  { display: flex; }
-    .mobile-menu { display: flex; }
-    .directorio { padding-top: 120px; }
-    .directorio-title { font-size: 2.5rem; }
-    .text-title { font-size: 1.5rem; }
-}
+        .menu-links { display: flex; gap: 2.5rem; list-style: none; }
+
+        .menu-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .menu-links a:hover { color: var(--accent-color); }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--text-color);
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        .theme-toggle:hover { background-color: var(--text-color); }
+        .theme-toggle svg { width: 18px; height: 18px; stroke: var(--text-color); transition: stroke 0.3s ease; }
+        .theme-toggle:hover svg { stroke: var(--bg-color); }
+        body:not(.dark-mode) .icon-moon { display: none; }
+        body:not(.dark-mode) .icon-sun  { display: block; }
+        body.dark-mode .icon-sun        { display: none; }
+        body.dark-mode .icon-moon       { display: block; }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 26px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+        .hamburger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: var(--text-color);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            width: 100%;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            z-index: 99;
+            padding: 0 5% 1.5rem;
+            flex-direction: column;
+            border-bottom: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(-8px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .mobile-menu.open { opacity: 1; transform: translateY(0); }
+        .mobile-menu li { list-style: none; border-bottom: 1px solid var(--border-color); }
+        .mobile-menu a {
+            display: block;
+            padding: 1.1rem 0;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .mobile-menu a:hover { color: var(--accent-color); }
+
+        .directorio {
+            padding: 150px 5% 100px 5%;
+            max-width: 1000px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        .directorio-header {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .directorio-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 0;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-bottom-color: var(--text-color);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-color);
+            opacity: 0.4;
+            font-weight: 300;
+        }
+
+        .text-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .text-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-color);
+            text-decoration: none;
+            color: var(--text-color);
+            transition: padding-left 0.4s ease, opacity 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .text-item:hover { padding-left: 1.5rem; }
+
+        .text-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .text-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .text-author {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .text-item:hover .text-title { color: var(--accent-color); }
+
+        .text-arrow {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.4s ease;
+        }
+
+        .text-item:hover .text-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 2rem;
+            transition: border-color 0.5s ease;
+        }
+
+        .footer-logo {
+            max-width: 120px;
+            height: auto;
+            transition: filter 0.5s ease;
+        }
+
+        body.dark-mode .footer-logo { filter: invert(1); }
+
+        .social-links { display: flex; gap: 1.5rem; list-style: none; }
+
+        .social-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover { color: var(--accent-color); }
+
+        .copyright { font-size: 0.75rem; opacity: 0.6; }
+
+        @media (max-width: 768px) {
+            .menu-links  { display: none; }
+            .hamburger   { display: flex; }
+            .mobile-menu { display: flex; }
+            .directorio  { padding-top: 120px; }
+            .directorio-title { font-size: 2.5rem; }
+            .text-title  { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        if (localStorage.getItem('tema') === 'oscuro') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+
+    <nav id="mainNav">
+        <a href="index.html" class="logo">Taller de Escritores<br>Urabá Escribe<span>.</span></a>
+        <div class="nav-right">
+            <ul class="menu-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="taller.html">El Taller</a></li>
+                <li><a href="textos.html">Textos</a></li>
+                <li><a href="donar.html">Donar</a></li>
+            </ul>
+            <button class="theme-toggle" id="btnTheme" title="Cambiar modo">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="18.36" x2="5.64" y2="16.93"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="hamburger" id="btnHamburger" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <ul class="mobile-menu" id="mobileMenu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="taller.html">El Taller</a></li>
+        <li><a href="textos.html">Textos</a></li>
+        <li><a href="donar.html">Donar</a></li>
+    </ul>
+
+    <main class="directorio">
+        <div class="directorio-header">
+            <h1 class="directorio-title">Archivo de Textos</h1>
+            <div class="search-container">
+                <input type="text" id="buscador" class="search-input" placeholder="Buscar por título o autor...">
+            </div>
+        </div>
+
+        <ul class="text-list" id="listaTextos"></ul>
+    </main>
+
+    <footer>
+        <img src="logo.png" alt="Sello Urabá Escribe 1985" class="footer-logo">
+        <ul class="social-links">
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+        <p class="copyright">© 2026 Taller de Escritores Urabá Escribe. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const baseDeDatos = [
+            { id: 1, titulo: "Una noche en Suavesón", autor: "Albeiro Flórez Villa", url: "perfil.html?id=1" }
+        ];
+
+        const listaTextos = document.getElementById('listaTextos');
+        const buscador    = document.getElementById('buscador');
+
+        function mostrarTextos(textos) {
+            listaTextos.innerHTML = '';
+            if (textos.length === 0) {
+                listaTextos.innerHTML = '<p style="text-align:center; margin-top:3rem; font-family:\'Playfair Display\', serif; font-style:italic; opacity:0.6; font-size:1.2rem;">Ningún texto coincide con tu búsqueda.</p>';
+                return;
+            }
+            textos.forEach(texto => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <a href="${texto.url}" class="text-item">
+                        <div class="text-info">
+                            <span class="text-title"><i>${texto.titulo}</i></span>
+                            <span class="text-author">${texto.autor}</span>
+                        </div>
+                        <div class="text-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </a>
+                `;
+                listaTextos.appendChild(li);
+            });
+            gsap.to(".text-item", { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: "power2.out" });
+        }
+
+        buscador.addEventListener('input', (e) => {
+            const palabraBuscada = e.target.value.toLowerCase();
+            const resultados = baseDeDatos.filter(texto =>
+                texto.titulo.toLowerCase().includes(palabraBuscada) ||
+                texto.autor.toLowerCase().includes(palabraBuscada)
+            );
+            mostrarTextos(resultados);
+        });
+
+        window.onload = () => {
+            mostrarTextos(baseDeDatos);
+            gsap.from(".directorio-title", { opacity: 0, y: 20, duration: 1, ease: "power2.out" });
+            gsap.from(".search-input", { opacity: 0, width: "50%", duration: 1, ease: "power2.out", delay: 0.3 });
+            gsap.from("nav", { opacity: 0, y: -20, duration: 1, ease: "power2.out" });
+        };
+
+        // Menú hamburguesa
+        const mainNav      = document.getElementById('mainNav');
+        const mobileMenu   = document.getElementById('mobileMenu');
+        const btnHamburger = document.getElementById('btnHamburger');
+
+        function setMenuTop() {
+            mobileMenu.style.top = mainNav.offsetHeight + 'px';
+        }
+        setMenuTop();
+        window.addEventListener('resize', setMenuTop);
+
+        btnHamburger.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.toggle('open');
+            btnHamburger.classList.toggle('open', isOpen);
+            btnHamburger.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                btnHamburger.classList.remove('open');
+            });
+        });
+
+        // Modo oscuro
+        document.getElementById('btnTheme').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('tema', document.body.classList.contains('dark-mode') ? 'oscuro' : 'claro');
+        });
+    </script>
+</body>
+</html>
